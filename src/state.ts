@@ -25,10 +25,7 @@ import {Project,projectStatus} from "./project.js";
             this.instance = new ProjectState();
             return this.instance;
         }
-        // addListeners(listnenrFn: Listener) {
-        //     this.listeners.push(listnenrFn);
-        // }
-    
+
         addProject(title: string, description: string, numOfPeople: number) {
             const newProject = new Project(
                 Math.random().toString(),
@@ -36,13 +33,22 @@ import {Project,projectStatus} from "./project.js";
                 description,
                 numOfPeople,
                 projectStatus.Active,
-            );
-            // this.projects.forEach(function(value){
-                console.log('inside project input');
+            );  
                 if (!this.projects.includes(newProject)){
-                    this.projects.push(newProject);} 
-            //   });
-            // this.projects.push(newProject);
+                    this.projects.push(newProject);
+                } 
+            this.updateListeners();
+           
+        }
+        moveProject(id:string, newStatus: projectStatus){
+
+            const project = this.projects.find(prj => prj.id === id);
+            if(project && project.status !== newStatus) {
+                project.status = newStatus;
+                this.updateListeners();
+            }
+        }
+        private updateListeners(){
             for (const listnenrFn of this.listeners) {
                 listnenrFn(this.projects.slice());
             }

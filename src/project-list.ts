@@ -21,19 +21,20 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
             event.preventDefault();
             const listEl = this.element.querySelector('ul')!;
             listEl.classList.add('droppable');
-        } 
-   
+        }
+    }
+    @autobind
+    drop(event: DragEvent): void {
+       const prjId = event.dataTransfer!.getData('text/plain');
+       console.log('id' + prjId);
+       projectstate.moveProject(prjId, this.type === 'active' ? projectStatus.Active : projectStatus.Finished);
+       this.element.querySelector('ul')!.classList.remove('droppable');
     }
 
-    drop(event: DragEvent): void {
-        console.log(event);
-       
-    }
     @autobind
     dragLeave(_: DragEvent): void {
         const listEl = this.element.querySelector('ul')!;
         listEl.classList.remove('droppable');
-        console.log('dropped');
     }
     configure(): void {
         this.element.addEventListener('dragover', this.dragOver);

@@ -1,5 +1,5 @@
 
-    //project type
+//project type
 export enum projectStatus { Active, Finished }
    export class Project {
         constructor(public id: string,

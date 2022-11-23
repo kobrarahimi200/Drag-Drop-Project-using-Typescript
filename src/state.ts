@@ -19,7 +19,7 @@ import {Project,projectStatus} from "./project.js";
         private constructor() { super();}
         static getInstance() {
             if (this.instance) {
-                console.log('instance state');
+                // console.log('instance state');
                 return this.instance;
             }
             this.instance = new ProjectState();
@@ -38,7 +38,6 @@ import {Project,projectStatus} from "./project.js";
                     this.projects.push(newProject);
                 } 
             this.updateListeners();
-           
         }
         moveProject(id:string, newStatus: projectStatus){
 
@@ -46,6 +45,10 @@ import {Project,projectStatus} from "./project.js";
             if(project && project.status !== newStatus) {
                 project.status = newStatus;
                 this.updateListeners();
+            }
+            if(project?.status === projectStatus.Finished){
+                document.getElementsByClassName('done')[0].innerHTML = 'finished';
+                document.getElementsByClassName('done')[0].classList.add('finished');
             }
         }
         private updateListeners(){

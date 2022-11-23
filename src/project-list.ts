@@ -10,10 +10,10 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
     assignedProjects: Project[];
 
     constructor(private type: 'active' | 'finished') {
-        super('project-list', 'app', false, `${type}-projects`);
+        super('project-list', 'proj', false, `${type}-projects`);
         this.assignedProjects = [];
         this.configure();
-        this.renderContent();
+        this.renderContent();  
     }
     @autobind
     dragOver(event: DragEvent): void {
@@ -36,11 +36,14 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
         const listEl = this.element.querySelector('ul')!;
         listEl.classList.remove('droppable');
     }
+    moveToFinished(prjId:string){
+        projectstate.moveProject(prjId, this.type === 'active' ? projectStatus.Active : projectStatus.Finished);
+    }
     configure(): void {
         this.element.addEventListener('dragover', this.dragOver);
         this.element.addEventListener('dragleave', this.dragLeave);
         this.element.addEventListener('drop', this.drop);
-
+       
         projectstate.addListeners((projects: Project[]) => {
             const relevantProjects = projects.filter(proj => {
                 if (this.type === 'active') {
@@ -48,10 +51,11 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
                 } 
                 return proj.status === projectStatus.Finished;
             });
-            this.assignedProjects = relevantProjects;//overide the old with then ew project
+            this.assignedProjects = relevantProjects;//overide the old with then new project
             this.renderProject();
-        })
+        });
     }
+   
     renderProject() {
         const listElem = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
         listElem.innerHTML='';//avoid duplication adding

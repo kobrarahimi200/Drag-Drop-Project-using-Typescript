@@ -54,7 +54,12 @@ button:active {
   background: #a80041;
   border-color: #a80041;
 }
-
+.finished,
+.finished:hover,
+.finished:active {
+  background: #51d90ded;
+  border-color: #1a9d06;
+}
 .projects {
   margin: 1rem;
   border: 1px solid #ff0062;

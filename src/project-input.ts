@@ -9,7 +9,7 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
         people: HTMLInputElement;
     
         constructor() {
-            super('project-input', 'app', true, 'user-input');
+            super('project-input', 'proj', true, 'user-input');
             this.title = this.element.querySelector('#title') as HTMLInputElement;
             this.description = this.element.querySelector('#description') as HTMLInputElement;
             this.people = this.element.querySelector('#people') as HTMLInputElement;
